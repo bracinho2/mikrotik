@@ -1,3 +1,6 @@
+#####
+#Script que afere a conexão para evitar travamentos de RX em link ADSL
+###
 #log warning "Iniciar afericao periodica de link: detecta travamento de pppoe"
 
 
