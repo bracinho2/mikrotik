@@ -1,0 +1,67 @@
+#log warning "Iniciar afericao periodica de link: detecta travamento de pppoe"
+
+
+global linkaverinet "link01"
+global linkaver01
+global linkaver02
+global linkaver03
+
+
+### Afere
+
+/interface monitor-traffic [/interface find name=$linkaverinet] once do={
+
+:set linkaver01 (rx-bits-per-second);
+
+}
+
+delay 40s
+
+/interface monitor-traffic [/interface find name=$linkaverinet] once do={
+
+:set linkaver02 (rx-bits-per-second);
+
+}
+
+delay 40s
+
+/interface monitor-traffic [/interface find name=$linkaverinet] once do={
+
+:set linkaver03 (rx-bits-per-second);
+
+}
+
+### Compara
+
+#log warning "Comparar afericoes: 01 e 02"
+
+if ($linkaver01 = $linkaver02) do={
+
+#log warning "Afericao 01 e 02 iguais | Afericao 02 e 03"
+
+##################################
+
+    if ($linkaver02 = $linkaver03) do={
+
+    log warning "O $linkaverinet travado foi desabilitado!"
+
+    /interface disable $linkaverinet
+
+    delay 10s
+
+    /tool e-mail send to=youremail@server.com subject="$linkaverinet desativado" body="Atencao! O $linkaverinet foi desativado.\r\n\r\n***Esta é uma mensagem automatica***\r\n"
+
+    } else={
+
+    log warning "$linkaverinet operacional: Sem uso!"
+
+    } 
+##################################
+
+} else={
+
+#log warning "$linkaverinet operacional!"
+
+}
+
+#log warning "Afericao finalizada!"
