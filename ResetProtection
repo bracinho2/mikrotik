@@ -1,3 +1,7 @@
+#Script criado para ambientes com Access Points Wireless em bridge
+#Alerta sobre possivel reset do cliente ou reset por surto elétrico
+#Avisa e bloqueia no IP-Bindings para evitar acesso indevido à rede
+
 log error "Reset Protection"
 log warning "### Router -> TL-WR849N ###"
 
