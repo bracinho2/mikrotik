@@ -5,8 +5,8 @@
 /interface set "ether5" name="ether5"
 
 #Configurar IPs dos gateways;
-:global primaryGateway 192.168.0.1
-:global secundaryGateway 192.168.1.1
+:global primaryGateway 192.168.1.1
+:global secundaryGateway 192.168.0.1
 
 # configurar os clientes dhcp;
 /ip dhcp-client
@@ -19,13 +19,13 @@ add address=192.168.88.1/24 interface=ether5 network=192.168.88.0
 
 # mascara dos gateways no firewal
 /ip firewall nat
-add action=masquerade chain=srcnat out-interface=ether1-gateway
-add action=masquerade chain=srcnat out-interface=ether2-gateway
+add action=masquerade chain=srcnat out-interface=ether1-gateway comment="GATEWAY 01 - MASK"
+add action=masquerade chain=srcnat out-interface=ether2-gateway comment="GATEWAY 02 - MASK"
 
 # configuraçao das regras do balance no FIREWALL > MANGLE
 /ip firewall mangle
-add action=mark-connection chain=prerouting comment="LOADBALANCE" connection-state=new in-interface=ether1-gateway new-connection-mark=ether1_conn
-add action=mark-connection chain=prerouting connection-state=new in-interface=ether2-gateway new-connection-mark=ether2_conn
+add action=mark-connection chain=prerouting comment="LOADBALANCE - GATEWAY 01" connection-state=new in-interface=ether1-gateway new-connection-mark=ether1_conn
+add action=mark-connection chain=prerouting comment="LOADBALANCE - GATEWAY 02" connection-state=new in-interface=ether2-gateway new-connection-mark=ether2_conn
 add action=mark-routing chain=output connection-mark=ether1_conn new-routing-mark=to_ether1
 add action=mark-routing chain=output connection-mark=ether2_conn new-routing-mark=to_ether2
 add action=mark-connection chain=prerouting connection-state=new dst-address-type=!local in-interface=ether5 new-connection-mark=ether1_conn per-connection-classifier=both-ports:2/0
@@ -41,17 +41,20 @@ add comment=Ether1-Wan distance=1 gateway=$primaryGateway
 add comment=Ether2-Wan distance=2 gateway=$secundaryGateway
 
 # configurar script de monitoramento dos links;
-:global newgw [/ip dhcp-client get [find interface="ether1-gateway" ] gateway ]
-:global activegw [/ip route get [/ip route find comment="Ether1-Wan"] gateway ]
-:if ($newgw != $activegw) do={
+:global newgw1 [/ip dhcp-client get [find interface="ether1-gateway" ] gateway ]
+:global activegw1 [/ip route get [/ip route find comment="Ether1-Wan"] gateway ]
+:if ($newgw1 != $activegw1) do={
 /ip route set [find comment="Ether1-Wan"] gateway=$newgw
 /ip route set [find comment="Ether1-Wan routing gateway"] gateway=$newgw
 }
-:global newgw [/ip dhcp-client get [find interface="ether2-gateway" ] gateway ]
-:global activegw [/ip route get [/ip route find comment="Ether2-Wan"] gateway ]
-:if ($newgw != $activegw) do={
+
+
+:global newgw2 [/ip dhcp-client get [find interface="ether2-gateway" ] gateway ]
+:global activegw2 [/ip route get [/ip route find comment="Ether2-Wan"] gateway ]
+:if ($newgw2 != $activegw2) do={
 /ip route set [find comment="Ether2-Wan"] gateway=$newgw
 /ip route set [find comment="Ether2-Wan routing gateway"] gateway=$newgw
 }
 
 # agendar script para controle;
+# Script name => ChangeGateways
