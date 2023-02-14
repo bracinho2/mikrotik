@@ -1,12 +1,23 @@
 
 # renomear as interfaces;
-/interface set "ether1" name="ether1-gateway"
-/interface set "ether2" name="ether2-gateway"
-/interface set "ether5" name="ether5"
+/interface set "ether1" comment="WAN1"
+/interface set "ether2" comment="WAN2"
 
-#Configurar IPs dos gateways;
-:global primaryGateway 192.168.1.1
-:global secundaryGateway 192.168.0.1
+# configurar os clientes dhcp
+/ip dhcp-client
+add add-default-route=no dhcp-options=hostname,clientid disabled=no interface=ether1 use-peer-dns=no use-peer-ntp=no comment="WAN1"
+add add-default-route=no dhcp-options=hostname,clientid disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no comment="WAN2"
+
+# configurar IPs dos gateways;
+:global primaryGateway [/ip dhcp-client get [/ip dhcp-client find interface=ether1] network]
+
+:global primaryGateway [:pick [/ip dhcp-client get [/ip dhcp-client find interface=ether1] address] 0 [:find [/ip dhcp-client get [/ip dhcp-client find interface=ether1] address] "/"]]
+
+:global secundaryGateway [:pick [/ip dhcp-client get [/ip dhcp-client find interface=ether1] address] 0 [:find [/ip dhcp-client get [/ip dhcp-client find interface=ether1] address] "/"]]
+
+# configurar bridge para rede local > adicionar portas conforme a necessidade
+/interface bridge add name="LanNetwork"
+/interface bridge port add interface=ether5 bridge="LanNetwork"
 
 # configurar os clientes dhcp;
 /ip dhcp-client
