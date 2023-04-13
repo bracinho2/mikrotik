@@ -1,18 +1,21 @@
 # Fetch Automation File;
-/tool fetch url="https://github.com/bracinho2/mikrotik/blob/master/automation.txt" mode=http
+/tool fetch url="https://raw.githubusercontent.com/bracinho2/mikrotik/master/automation.txt" mode=https
 
-:local content [/file get [/file find name="automation.txt"] contents] ;
+:if ([:len [/file find name="automation.txt"]] > 0) do={
 
-:global serverStatus
-:global billingStatus
+global serverStatus
+global billingStatus
 
-:local serverStatus [:find $content "var serverStatus="]
+:global content [/file get [/file find name="automation.txt"] contents] ;
+
+:local pos00 [:find $content "var serverStatus="]
 :local pos01 [:find $content "var billingStatus="]
 
 
-:set inicio [:pick $content ($pos00 + 11) ($pos01 - 4)]
-:set billingStatus [:pick $content ($pos00 + 11) ($pos01 - 4)]
+:set serverStatus [:pick $content ($pos00 + 17) ($pos01 - 2)]
+#:set local [:pick $content ($pos00 + 11) ($pos01 - 4)]
 
-# Delete Automation File;
+}
+
 #/file remove "automation.txt"
 
