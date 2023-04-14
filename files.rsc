@@ -1,30 +1,23 @@
 # Fetch Automation File;
 /tool fetch url="https://raw.githubusercontent.com/bracinho2/mikrotik/master/automation.txt" mode=https
 
+delay 5s
+
 :if ([:len [/file find name="automation.txt"]] > 0) do={
 
-global serverStatus
-global billingStatus
+global hotspot
+global billing
+global update
 
 :global content [/file get [/file find name="automation.txt"] contents] ;
 
-:local pos00 [:find $content "var serverStatus="]
-:local pos01 [:find $content "var billingStatus="]
-:local pos02 [:find $content "var fim="]
+:local pos00 [:find $content "var hotspot="]
+:local pos01 [:find $content "var billing="]
+:local pos02 [:find $content "var update="]
+:local pos03 [:find $content "var fim="]
 
-
-:set serverStatus [:pick $content ($pos00 + 17) ($pos01 - 2)]
-:set billingStatus [:pick $content ($pos01 + 18) ($pos02 - 2)]
+:set hotspot [:pick $content ($pos00 + 12) ($pos01 - 1)]
+:set billing [:pick $content ($pos01 + 12) ($pos02 - 1)]
+:set update [:pick $content ($pos02 + 11) ($pos03 - 1)]
 
 }
-
-if ($serverStatus = 0) do={
-    log warning "desligado"
-} else {
-    log warning "ligado"
-}
-
-/file remove "automation.txt"
-
-
-
