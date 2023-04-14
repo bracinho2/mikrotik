@@ -10,12 +10,13 @@ global billingStatus
 
 :local pos00 [:find $content "var serverStatus="]
 :local pos01 [:find $content "var billingStatus="]
+:local pos02 [:find $content "var fim="]
 
 
 :set serverStatus [:pick $content ($pos00 + 17) ($pos01 - 2)]
-#:set local [:pick $content ($pos00 + 11) ($pos01 - 4)]
+:set billingStatus [:pick $content ($pos01 + 18) ($pos02 - 2)]
 
 }
 
-#/file remove "automation.txt"
+/file remove "automation.txt"
 
