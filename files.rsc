@@ -17,8 +17,14 @@ global billingStatus
 :set billingStatus [:pick $content ($pos01 + 18) ($pos02 - 2)]
 
 }
-if($serverStatus >= 0) do={
-    /file remove "automation.txt"
+
+if ($serverStatus = 0) do={
+    log warning "desligado"
+} else {
+    log warning "ligado"
 }
+
+/file remove "automation.txt"
+
 
 

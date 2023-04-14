@@ -1,3 +1,4 @@
-var serverStatus=1
-var billingStatus=1
+var hotspot=1
+var billing=1
+var update=0
 var fim=fim!
