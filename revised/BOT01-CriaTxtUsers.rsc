@@ -25,7 +25,7 @@ foreach h in=[/ip hotspot user find] do={
 var usuario=\"$user\";
 var senha=\"$pass\";
 var profile=\"$profile\";
-var valor=\"20,00\";
+var valor=\"50,00\";
 var vencimento=\"10\";
 var aviso=\"11\";
 var bloqueio=\"13\";

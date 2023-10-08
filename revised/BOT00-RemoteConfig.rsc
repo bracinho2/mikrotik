@@ -23,18 +23,18 @@ delay 5s
 
 }
 
-#automatic billing
-log warning "Running Billing..."
-if ($billing = 1) do={
-    /system script run "BOT02-CobrancaAutomatica"
-}
-
 #enable/disable hotspot
 log warning "Running Hotspot Check Online/Offline..."
 if ($hotspot = 1) do={
     /ip hotspot enable  "hotspot"
 } else {
     /ip hotspot disable "hotspot"
+}
+
+#automatic billing
+log warning "Running Billing..."
+if ($billing = 1) do={
+    /system script run "BOT02-CobrancaAutomatica"
 }
 
 #update
