@@ -1,10 +1,12 @@
+log error "Inicializing Remote Config Automation"
+
 /tool fetch url="https://raw.githubusercontent.com/bracinho2/mikrotik/master/automation.txt"
 
 delay 5s
 
-:global hotspot
-:global billing
-:global update
+:local hotspot
+:local billing
+:local update
 
 :if ([:len [/file find name="automation.txt"]] > 0) do={
 
@@ -22,18 +24,21 @@ delay 5s
 }
 
 #automatic billing
+log warning "Running Billing..."
 if ($billing = 1) do={
     /system script run "BOT02-CobrancaAutomatica"
 }
 
 #enable/disable hotspot
+log warning "Running Hotspot Check Online/Offline..."
 if ($hotspot = 1) do={
-    /ip hotspot enable  "hotspot1"
+    /ip hotspot enable  "hotspot"
 } else {
-    /ip hotspot disable "hotspot1"
+    /ip hotspot disable "hotspot"
 }
 
 #update
+log warning "Running Update Check..."
 if ($update = 1) do={
     /system script run "Z03-AutoUpgrade"
 }
@@ -41,3 +46,5 @@ if ($update = 1) do={
 
 delay 5s
 file remove "automation.txt"
+
+log error "Remote Config Successfully Finished"

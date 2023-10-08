@@ -1,21 +1,17 @@
 :log warning "*COBRANCA AUTOMATICA*"
-:log warning "Verifing Remote Config..."
-
-if ($billing = 1) do={
-   :log warning "Enabled!"
 
     global data [/system clock get date] 
-    global dia [ :pick $data 4 6 ]
-    #global dia "12"
+    #global dia [ :pick $data 4 6 ]
+    global dia "13"
 
-    :log error "Hoje eh $dia"
+    :log error "* HOJE: $data *"
 
     :foreach h in=[/ip hotspot user find] do={
 
         :global user [/ip hotspot user get $h name]
         :global comment [/ip hotspot user get [/ip hotspot user find name=$user] comment]
 
-    :if ([:len [/file find name="flash/a-hotspot/usuarios/$user.cadastro.txt"]] > 0) do={
+    :if ([:len [/file find name="flash/hotspot/usuarios/$user.cadastro.txt"]] > 0) do={
 
         #:log warning "Lendo Cadastro de $user..."
 
@@ -31,7 +27,7 @@ if ($billing = 1) do={
         :global fim
 
 
-        :local content [/file get [/file find name="flash/a-hotspot/usuarios/$user.cadastro.txt"] contents] ;
+        :local content [/file get [/file find name="flash/hotspot/usuarios/$user.cadastro.txt"] contents] ;
 
         :local pos00 [:find $content "var local="]
         :local pos01 [:find $content "var usuario="]
@@ -90,7 +86,5 @@ if ($dia = $bloqueio) do={
 
 log error "Amem ==)"
 
-} else {
-    :log warning "Disabled!"
-}
+
 

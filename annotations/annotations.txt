@@ -1,0 +1,4 @@
+# Incorporar
+
+- Configuração de Perfil de Usuários;
+- Agendamento do RemoteConfig;
