@@ -23,6 +23,9 @@ delay 5s
 
 }
 
+delay 5s
+file remove "automation.txt"
+
 #enable/disable hotspot
 log warning "Running Hotspot Check Online/Offline..."
 if ($hotspot = 1) do={
@@ -31,20 +34,20 @@ if ($hotspot = 1) do={
     /ip hotspot disable "hotspot"
 }
 
+delay 10s
+
 #automatic billing
 log warning "Running Billing..."
 if ($billing = 1) do={
     /system script run "BOT02-CobrancaAutomatica"
 }
 
+delay 60s
+
 #update
 log warning "Running Update Check..."
 if ($update = 1) do={
     /system script run "Z03-AutoUpgrade"
 }
-
-
-delay 5s
-file remove "automation.txt"
 
 log error "Remote Config Successfully Finished"
