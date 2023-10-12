@@ -51,7 +51,7 @@
 
             if ($comment = "Deve") do={
 
-                    log error "Dados do Usuario: * \nUsuario: $user \nStatus: $comment \nBloqueio: $bloqueio"
+                    log error "###Auto Billing ### \nUsuario: $user \nStatus: $comment \nBloqueio: $bloqueio \n###Auto Billing ###\n"
 
                     #local servidor  [/system identity get name]
 

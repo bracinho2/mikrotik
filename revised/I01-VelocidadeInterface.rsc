@@ -11,7 +11,7 @@ log warning "*DAILY CABLE CHECK*"
              :if ($interfaceStatus = "10Mbps") do={
 
                 :local identity [/system identity get name]
-                :local message "$identity -> Cabo Quebrado na $intname!"
+                :local message "$identity -> CABO QUEBRADO NA $intname!"
 
                     log error $message
                         

@@ -2,3 +2,7 @@
 
 - Configuração de Perfil de Usuários;
 - Agendamento do RemoteConfig;
+- Monitor de Link na Bridge Down/Up;
+- Aviso Entrada Lista Branca e Login no Telegram;
+- Monitor de Interface e Cabo Quebrado;
+- Agendamento de Backup;
