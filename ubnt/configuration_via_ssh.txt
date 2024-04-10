@@ -1,0 +1,14 @@
+Configurar UBNT por SSH
+
+vi /tmp/system.cfg
+
+Sair sem salvar:
+esc + :q! + enter
+
+Salvar e sair:
+esc + :wq + enter
+
+Aplicar configuração:
+cfgmtd -w -f /tmp/system.cfg
+
+reboot

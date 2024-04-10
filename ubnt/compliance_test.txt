@@ -1,0 +1,7 @@
+Habilitar COMPLIANCE TEST UBNT
+
+*Entrar via SSH
+
+touch /etc/persistent/ct
+save
+reboot

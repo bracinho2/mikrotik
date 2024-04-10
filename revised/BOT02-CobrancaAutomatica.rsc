@@ -51,7 +51,7 @@
 
             if ($comment = "Deve") do={
 
-                    log error "###Auto Billing ### \nUsuario: $user \nStatus: $comment \nBloqueio: $bloqueio \n###Auto Billing ###\n"
+                    log warning "###Auto Billing ### \nUsuario: $user \nStatus: $comment \nBloqueio: $bloqueio \n###Auto Billing ###\n"
 
                     #local servidor  [/system identity get name]
 
@@ -68,6 +68,8 @@
                         /ip hotspot ip-binding set [/ip hotspot ip-binding find comment="$user.tv"] disable=yes
 
                         log error "$usuario foi comunicado (a) de BLOQUEIO!"
+
+                            log error "###Auto Billing ### \nUsuario: $usuario \nPagamento: $comment \nBloqueio: $bloqueio \nStatus: BLOQUEADO\n###Auto Billing ###\n"
 
                         delay 2s
 

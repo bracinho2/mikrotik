@@ -12,6 +12,7 @@ log error "MONITOR DE RESET -> ATIVADO"
     "TL-WR849N";
     "A10C";
     "Archer_C20";
+    "AC12G";
 
 });
 
@@ -27,7 +28,8 @@ for i from=0 to=([:len $routerList] -1) do={
 
 
             local mac [/ip dhcp-server lease get $i mac-address]
-
+            local comment [/ip dhcp-server lease get $i comment]
+            
             local hostname [/ip dhcp-server lease get [/ip dhcp-server lease find mac-address="$mac"] host-name]
 
             local ip [/ip dhcp-server lease get $i address]
@@ -38,7 +40,7 @@ for i from=0 to=([:len $routerList] -1) do={
 
             :if ($hostname = $host) do={
 
-                log error "PERIGO: $host RESETADO -> $ip & $mac"
+                log error "$comment: Roteador RESETADO -> $ip & $mac"
 
                 :local data [/system clock get date]
                 :local hora [/system clock get time]

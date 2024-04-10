@@ -16,7 +16,7 @@ log warning "Daily Check Servers ;)"
     "Cecilia"=102.102.102.2;
     }
 
-:global results;
+
 
 :foreach s,i in=$servers do={
 
