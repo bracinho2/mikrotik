@@ -18,7 +18,7 @@ Send Resume to enable it again.
 :local celular "554599247838"
 :local api "8242887"
 
-/tool/fetch keep-result=no url="https://api.callmebot.com/whatsapp.php?apikey=$api&phone=$celular&text=mikrotik+test"
+/tool fetch keep-result=no url="https://api.callmebot.com/whatsapp.php?phone=554599247838&apikey=8242887&text=This+is+a+teste"
 
 
 #primeiro teste
