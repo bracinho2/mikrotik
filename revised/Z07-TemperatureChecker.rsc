@@ -1,12 +1,20 @@
-:local TempThreshold 35;
+### Configure ###
 
-:local CurrentTemp [/system health get temperature];
+:local tempThreshold 35;
 
- :if ($CurrentTemp > $TempThreshold) do={
+### End ###
 
-    log warning "### MIKROTIK TEMPERATURE ###"
+:local currentTemp [/system health get temperature];
 
-    :local AlertMessage "High Temperature: $CurrentTemp Celsius";
-    :log error $AlertMessage;
+:if ($currentTemp > $tempThreshold) do={
+
+        :local identity [/system identity get name]
+        
+        :local message "$identity > High Temperature: $currentTemp Celsius"
+
+        log warning $message
+        
+        /tool fetch url="https://api.telegram.org/bot6263388304:AAE_avJz2oJgnmqo-ziEw7iRtLITm3gcGW8/sendMessage?chat_id=-979295434&text=$message" keep-result=no
+
 }
 

@@ -1,4 +1,4 @@
-var hotspot=1
-var billing=1
+var hotspot=0
+var billing=0
 var update=0
 var fim=fim!
